@@ -26,42 +26,4 @@ public class CoreData {
         return out;
     }
 
-    public long selectionSort(int[] testData){
-        int len = testData.length;
-        long start = System.nanoTime();
-        System.out.println("Beginning sort...");
-        for (int i = 0; i < len-1; i++){
-            int sm = i;
-            for (int j = i+1; j < len; j++){
-                if (testData[j] < testData[sm])
-                    sm = j;
-            }
-            int temp = testData[i];
-            testData[i] = testData[sm];
-            testData[sm] = temp;
-        }
-
-        System.out.println("Sort ended");
-        long end = System.nanoTime();
-        return end - start;
-    }
-
-    public long insertionSort(int[] testData){
-        int len = testData.length;
-        long start = System.nanoTime();
-
-        for (int i = 1; i < len; i++){
-            int temp = testData[i];
-            int j = i-1;
-            while (j > -1 && testData[j] > temp){
-                testData[j+1] = testData[j];
-                j--;
-            }
-            testData[j+1] = temp;
-        }
-
-        long end = System.nanoTime();
-        return end - start;
-    }
-
 }
