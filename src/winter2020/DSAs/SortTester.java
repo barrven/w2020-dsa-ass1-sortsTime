@@ -99,63 +99,57 @@ public class SortTester {
         return i+1;
     }
 
-    public long timeSelectionSort(int[] testData){
-        long start = System.nanoTime();
-        selectionSort(testData);
-        long end = System.nanoTime();
+
+    public long sortTimer(int[] testData, String choice){
+        long start = 0, end = 0;
+
+        switch (choice) {
+            case "s":
+                start = System.nanoTime();
+                selectionSort(testData);
+                end = System.nanoTime();
+                break;
+            case "i":
+                start = System.nanoTime();
+                insertionSort(testData);
+                end = System.nanoTime();
+                break;
+            case "m":
+                start = System.nanoTime();
+                mergeSort(testData, testData.length);
+                end = System.nanoTime();
+                break;
+            case "q":
+                start = System.nanoTime();
+                quickSort(testData, 0, testData.length - 1);
+                end = System.nanoTime();
+                break;
+        }
+
         return end - start;
     }
 
-    public long timeInsertionSort(int[] testData){
-        long start = System.nanoTime();
-        insertionSort(testData);
-        long end = System.nanoTime();
-        return end - start;
-    }
+    public void testSorts(String title, int testSize){
+        String[] labels = {"\tSelection sort: ", "\tInsertion sort: ", "\tMerge sort: ", "\tQuick sort: "};
+        String[] selectors = {"s", "i", "m", "q"};
 
-    public long timeMergeSort(int[] testData){
-        long start = System.nanoTime();
-        mergeSort(testData, testData.length);
-        long end = System.nanoTime();
-        return end - start;
-    }
+        System.out.println(title);
 
-    public long timeQuickSort(int[] testData){
-        int begin = 0;
-        int end = testData.length;
-        long start = System.nanoTime();
-        quickSort(testData, begin, end);
-        long finish = System.nanoTime();
-        return finish - start;
-    }
-
-    public void testSelectionSort(String title, int testSize){
         if (testSize > 999999){
-            System.out.println(title);
-            System.out.print("\tSelection sort: ");
-            System.out.printf("%,f", timeSelectionSort(cd.getDataSlice(testSize)) / 1000000.0);
-            System.out.println(" ms");
+            for (int i = 0; i < 4; i++){
+                System.out.print(labels[i]);
+                System.out.printf("%,f", sortTimer(cd.getDataSlice(testSize), selectors[i]) / 1000000.0);
+                System.out.println(" ms");
+            }
 
-            System.out.print("\tInsertion sort: ");
-            System.out.printf("%,f", timeInsertionSort(cd.getDataSlice(testSize)) / 1000000.0);
-            System.out.println(" ms");
-
-            System.out.print("\tMerge sort: ");
-            System.out.printf("%,f", timeMergeSort(cd.getDataSlice(testSize)) / 1000000.0);
-            System.out.println(" ms");
         }
         else {
-            System.out.print(title + "\n\tSelection sort: ");
-            System.out.printf("%,d", timeSelectionSort(cd.getDataSlice(testSize)));
-            System.out.println(" ns");
+            for (int i = 0; i < 4; i++){
+                System.out.print(labels[i]);
+                System.out.printf("%,d", sortTimer(cd.getDataSlice(testSize), selectors[i]));
+                System.out.println(" ns");
+            }
 
-            System.out.print("\tInsertion sort: ");
-            System.out.printf("%,d", timeInsertionSort(cd.getDataSlice(testSize)));
-            System.out.println(" ns");
-
-            System.out.print("\tMerge sort: ");
-            System.out.printf("%,d", timeMergeSort(cd.getDataSlice(testSize)));
-            System.out.println(" ns");
         }
     }
 
